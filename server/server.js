@@ -1,0 +1,17 @@
+const express = require("express")
+const app = express()
+const mongoose = require("mongoose")
+const dotenv = require("dotenv")
+dotenv.config()
+mongoose.connect(process.env.NODE_API_URL).then(() => {console.log("Database connected")}).catch(() => console.log("Failed to connect database"))
+const cors = require("cors")
+const router = require("./routes/routes.api")
+const router_v1_menu = require("./routes/routes.api-v1")
+const PORT = 8080
+app.listen(PORT, () => {
+ console.log(`Server is running on port ${PORT}`)
+})
+app.use(express.json())
+app.use(cors())
+app.use("/api", router)
+app.use("/api/v1", router_v1_menu)
